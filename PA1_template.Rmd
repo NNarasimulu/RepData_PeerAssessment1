@@ -5,13 +5,33 @@ output:
     keep_md: true
 ---
 
+Set working directory to a local Github location for RepData_PeerAssessment1.
+```{r workingdir, echo=TRUE}
+setwd("C:/Users/NNarasim/Git/RepData_PeerAssessment1")
+library(data.table)
+```
 
 ## Loading and preprocessing the data
+This reads the contents of the CSV file and removes all NA records.
+```{r loaddata, echo=TRUE}
+unzip ("activity.zip")
+activity <- read.csv("activity.csv")
+activity <- activity[complete.cases(activity),]
+```
 
 
 
 ## What is mean total number of steps taken per day?
-
+Aggregate the steps for each day to display in a histogram.
+```{r hist, echo=TRUE}
+activity_steps <- aggregate(steps ~ date, activity, sum)
+hist(activity_steps$steps, xlab = "Total steps per day", ylab = "Number of occurences",
+     main = "Total number of steps per day")
+act_mean <- mean(activity_steps$steps)
+act_mean
+act_med <- median(activity_steps$steps)
+act_med
+```
 
 
 ## What is the average daily activity pattern?
